@@ -1,0 +1,17 @@
+Wafer
+
+Flatten a JSON object into key value pairs, inflate again.
+
+    Discussion:     http://bigeasy.github.io/wafer/issues/1
+
+    Documentation:  http://bigeasy.github.io/wafer
+    Source:         http://github.io/bigeasy/wafer
+    Issues:         http://github.com/bigeasy/wafer/issues
+
+    Install:        `npm install wafer`
+
+    License:        MIT
+
+To learn everything you want to know about Wafer start here:
+
+    http://bigeasy.github.io/wafer
