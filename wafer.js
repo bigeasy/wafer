@@ -1,3 +1,7 @@
+function encode (value) {
+    return '%' + value.charCodeAt(0).toString(16)
+}
+
 function stringify (path, value, out) {
     var left = '[', right = ']'
     switch (typeof value) {
@@ -16,7 +20,7 @@ function stringify (path, value, out) {
         return null
     case 'number':
     case 'string':
-        out.push(path.join('.') + '=' + encodeURIComponent(value) + ';')
+        out.push(path.join('.') + '=' + String(value).replace(/[=; \n]/g, encode) + ';')
         break
     }
 }
@@ -30,7 +34,7 @@ exports.stringify = function (value) {
 exports.parse = function (value) {
     var object = []
     if (/\S/.test(value)) {
-        value.split(/\s+/).forEach(function (pair) {
+        value.split(/ +/).forEach(function (pair) {
             var $ = /^([^=]+)(=?)(.*);$/.exec(pair)
             var iterator = object, path = $[1].split('.')
             for (var j = 0, J = path.length - 1; j < J; j++) {
