@@ -20,7 +20,7 @@ function stringify (path, value, out) {
         return null
     case 'number':
     case 'string':
-        out.push(path.join('.') + '=' + String(value).replace(/[=; \n]/g, encode) + ';')
+        out.push(path.join('.') + '=' + String(value).replace(/[=;\n]/g, encode) + ';')
         break
     }
 }
@@ -34,8 +34,8 @@ exports.stringify = function (value) {
 exports.parse = function (value) {
     var object = []
     if (/\S/.test(value)) {
-        value.split(/ +/).forEach(function (pair) {
-            var $ = /^([^=]+)(=?)(.*);$/.exec(pair)
+        value.split(/; +/).forEach(function (pair) {
+            var $ = /^([^=;]+)(=?)([^;]*);?$/.exec(pair)
             var iterator = object, path = $[1].split('.')
             for (var j = 0, J = path.length - 1; j < J; j++) {
                 if (iterator[path[j]] == null) {
