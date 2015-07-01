@@ -1,5 +1,9 @@
-function encode (value) {
+function percent (value) {
     return '%' + value.charCodeAt(0).toString(16)
+}
+
+function encode (value) {
+    return String(value).replace(/[=;\n]/g, percent)
 }
 
 function stringify (path, value, out) {
@@ -20,7 +24,7 @@ function stringify (path, value, out) {
         return null
     case 'number':
     case 'string':
-        out.push(path.join('.') + '=' + String(value).replace(/[=;\n]/g, encode) + ';')
+        out.push(encode(path.join('.')) + '=' + encode(value) + ';')
         break
     }
 }
