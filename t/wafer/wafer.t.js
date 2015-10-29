@@ -1,4 +1,4 @@
-require('proof')(11, prove)
+require('proof')(13, prove)
 
 function prove (assert) {
     var Wafer = require('../..')
@@ -13,4 +13,6 @@ function prove (assert) {
     assert(Wafer.stringify({ a: 1, b: undefined }), 'a=1;', 'stringify undefined')
     assert(Wafer.stringify({}), '', 'stringify empty')
     assert(Wafer.parse(''), {}, 'parse empty')
+    assert(Wafer.stringify({ a: { b: 1 } }), 'a.b=1;', 'stringify nested')
+    assert(Wafer.stringify({ a: { b: '\n' } }), 'a.b=%0a;', 'stringify padded')
 }

@@ -1,5 +1,9 @@
 function percent (value) {
-    return '%' + value.charCodeAt(0).toString(16)
+    var string = value.charCodeAt(0).toString(16)
+    if (string.length == 1) {
+        string = '0' + string
+    }
+    return '%' + string
 }
 
 function encode (value) {
