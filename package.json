@@ -1,6 +1,6 @@
 {
     "name":             "wafer",
-    "version":          "0.0.2",
+    "version":          "0.0.3",
     "description":      "Flatten a JSON object into key value pairs, inflate again.",
     "author":           "Alan Gutierrez <alan@prettyrobots.com>",
     "homepage":         "https://bigeasy.github.io/wafer",
