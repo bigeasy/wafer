@@ -15,7 +15,7 @@
     "main":             "wafer",
     "devDependencies":
     {
-                        "proof": "0.0.52"
+                        "proof": "0.0.56"
     },
     "scripts":
     {
