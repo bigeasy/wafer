@@ -26,6 +26,7 @@ function stringify (path, value, out) {
             }
         }
         return null
+    case 'boolean':
     case 'number':
     case 'string':
         out.push(encode(path.join('.')) + '=' + encode(value) + ';')
