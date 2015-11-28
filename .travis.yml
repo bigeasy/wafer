@@ -16,7 +16,3 @@ branches:
 before_install:
   - npm install
   - npm install istanbul coveralls
-
-env:
-  global:
-  - secure: "JYTjdwn9c1/4Bxv3t0POBdfCav5IcrG4/wM+0fd/lxvKzbAP/NjPW14uXnzgtDSb00Vlp4zN+xdx8Ak/r8+/7X/BkcQvJuk4qK2Iqoqw9OvUnUsbmajC9Ta1gnX059KREy+MczUqNrQG3qngT/z0aA7kE4mXcbI/2+wdiNMVp9bxhRvG6j9STM3hAmZCdMegO6gQTsgrDkY+jZaraUhqfuz67uHd681alzM713RFihmJa1XyILj61Ct16cUntwngro+smHSpsa7S7lfb1pZ1YnwIyNRfI3/XGrQw3SwAtDHG+EA7+hJ35oxO9kLwsvpTzjn0k3KAJmymj0A+obIYiQCEx/kqDRbuGTBDjFS6y1jRzGqMNn0DPR+ITz0Wm8SlBfrDe3M8Tdd43TFHk1PG/oHbQexLW8SnF7lmc+W0isan+LhVGUX/aQHVRaXJ0tlj2TkhqBjZKZQoomoUpjX6w9saNKRpgreUQyTcU+l1MMDe6Scx7iCFHlly9Ygy7mpF4Dv3XQ85UZB9cFHXT7okDLkamIdUobSSwkJYezryLE1k4G3HEdVfzAF8Z44qKau6hFIz/ltoubLUn7f0XEasEoMSIo5xNX44PGMzhOE59cCarzEnArVK3jgr6tBlJKneOiKK2WvSuANFefHDOn7rOdsvwBrmr1DA2obdirwEhrw="
