@@ -1,7 +1,7 @@
 require('proof')(14, prove)
 
 function prove (assert) {
-    var Wafer = require('../..')
+    var Wafer = require('..')
     assert(Wafer.stringify({ a: 1 }), 'a=1;', 'stringify')
     assert(Wafer.parse('a=1;'), { a: 1 }, 'parse')
     assert(Wafer.parse('a=1; b.c=1; b.d=1;'), { a: 1, b: { c: 1, d: 1 } }, 'parse multi')
