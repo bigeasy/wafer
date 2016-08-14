@@ -15,7 +15,79 @@
 <h1>Wafer</h1>
 </div>
 <!-- todo: code font is too small for body text font -->
-<div class="unit description markdown"><p>Wafer</p>
+<div class="unit description markdown"><p>&#x2014;&#xA0;&#x2014;## Typed Log Lines</p>
+<p>Log line looking serialization that preserves type for use in your JavaScript
+programs.</p>
+<pre><code class="lang-javascript">Wafer.serialize({
+    name: <span class="hljs-string">&apos;mutate&apos;</span>
+    sequence: <span class="hljs-number">1</span>,
+    tag: [ <span class="hljs-string">&apos;database&apos;</span>, <span class="hljs-string">&apos;insert&apos;</span> ],
+    status: { workers: <span class="hljs-number">24</span>, locks: <span class="hljs-number">3</span> },
+    query: <span class="hljs-string">&apos;upsert(&quot;user&quot;, 1)\nwhere user = 1;&apos;</span>,
+    json: { keys: [ <span class="hljs-string">&apos;user&apos;</span>, <span class="hljs-number">1</span> ] }
+})
+</code></pre>
+<p>Becomes.</p>
+<pre><code class="lang-text">name=mutate; n sequence=1; 2 tag=database;, tag=insert; n status.workers=24; &#x21B5;
+    n status.locks=3; query=upsert(&quot;user&quot;, 1)%0awhere user %40 1%30; json={&quot;keys&quot;:[&quot;user&quot;,1]}
+</code></pre>
+<p>Semi-colon delimited and minimally URL encoded. A bit of cruft to preseve the
+type information, but still human readable. UNIX tool chain eats it up.</p>
+<pre><code class="lang-console"> % egrep &apos; name=mutate;&apos; out.log
+</code></pre>
+<h2 id="motivation">Motivation</h2>
+<p>Streaming JSON is a fine format for to write the logs. With Node.js close at
+hand you can usually find what you&apos;re looking for in streaming JSON. You can
+also use <code>jq</code> to &#x2014; the <code>awk</code> of JSON &#x2014; to find what you&apos;re looking
+for.</p>
+<p>Logging JSON to <code>syslog</code> however, is horrible way to live. I created Wafer to
+flatten out a JSON object just enough to make easy to search using tools
+designed for <code>syslog</code> analysis.</p>
+<p>It&apos;s easy to craft regular expressions such as <code>/ level=error;/</code> which is simple
+enough against JSON if you&apos;re using JavaScript regular expressions. You&apos;d simply
+say <code>/&quot;level&quot;:&quot;error&quot;/</code>. Not really that much harder.</p>
+<p>I ran into a logging database that wanted to match strings supplied as double
+quoted strings. I found myself writing out queries with a lot of backticks. The
+above query aganst JSON would be expressed
+as<code>&quot;\\\&quot;statusCode\\\&quot;:\\\&quot;error\\\&quot;&quot;</code>. Against Wafer the query is <code>&quot; level=error;&quot;</code>.</p>
+<p>That&apos;s why this library exists. It&apos;s supposed to be easy to search with standard
+regular expression tools. It&apos;s supposed to be easier to read than JSON. Let me
+know if you find a use for it.</p>
+<h2 id="type-annotations-sigils-and-other-dingbats">Type Annotations, Sigils and Other Dingbats</h2>
+<p>Theres a bit of cruft in a line of Wafer used to preserve type information. You
+can see that sequence is a number, so it is annotated with <code>n</code>. <code>tag</code> is an
+array, so it&apos;s first element is annotated with the array length, subsequent
+elements are delimiated by a semi-colon followed by a comma.</p>
+<pre><code class="lang-text">name=mutate; n sequence=1; 2 tag=database;, tag=insert; n status.workers=24; &#x21B5;
+    n status.locks=3; query=upsert(&quot;user&quot;, 1)%0awhere user %40 1%30; json={&quot;keys&quot;:[&quot;user&quot;,1]}
+</code></pre>
+<h2 id="winnow-versus-pinpoint">Winnow versus Pinpoint</h2>
+<p>I find there&apos;s a difference between the data I want to search and the data I
+want to see. The cursory searches that winnow zillions of log lines down to
+relevant log lines are different from the extraction of specific log lines from
+relevant log lines.</p>
+<p>The tool I&apos;m using will pattern match quickly using string match patterns. From
+there you can parse JSON to get more details. However if you have to parse JSON
+to extract feilds to search across the entire corpus, well, that&apos;s slow.</p>
+<p>This is why Wafer is designed to have some fields flat and some fields bundled
+up. (What I can probably do is work up some AWK + <code>jq</code> queries to how how they
+might work together.)</p>
+<h2 id="deeply-nested-nonsense">Deeply Nested Nonsense</h2>
+<p>The readability of Wafer breaks down when you nest too deeply, but it still
+works for any depth. It is essentially a write log.</p>
+<pre><code class="lang-javascript">Wafer.serialize({
+    object: {
+        array: [ <span class="hljs-string">&apos;one&apos;</span>, <span class="hljs-number">2</span>, { key: [ <span class="hljs-string">&apos;value&apos;</span> ] }, { one: <span class="hljs-number">1</span> }, [ <span class="hljs-string">&apos;four&apos;</span> ], <span class="hljs-string">&apos;five&apos;</span> ]
+    }
+})
+</code></pre>
+<p>Becomes.</p>
+<pre><code class="lang-text">4 object.array; object.array=one;, n object.array=2;, object.array.key=value;,
+    n object.array.one=1;, 1 object.array=four;, object.array=five
+</code></pre>
+<p>Basically, arrays nested in objects ruin everything. If you really want to dump
+a blob of data dump it as JSON using the <code>json</code> property. This property is
+serialized as JSON. You&apos;ll have the data if you need it.</p>
 </div></div></body>
 <!-- todo: move into an edify plugin -->
 <script>
