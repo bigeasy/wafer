@@ -1,3 +1,6 @@
 [submodule "vendor/lesshat"]
 	path = vendor/lesshat
 	url = https://github.com/madebysource/lesshat.git
+[submodule "wafer"]
+	path = wafer
+	url = https://github.com/bigeasy/wafer.git
