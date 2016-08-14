@@ -31,26 +31,28 @@ type information, but still human readable. UNIX tool chain eats it up.
 ## Motivation
 
 Streaming JSON is a fine format for to write the logs. With Node.js close at
-hand you can usually find what you're looking for in streaming JSON. You can
-also use `jq` to &mdash; the `awk` of JSON &mdash; to find what you're looking
-for.
+hand you can usually find what you're looking for in line after line of JSON.
+You can also use `jq` to &mdash; the `awk` of JSON &mdash; to find what you're
+looking for.
 
 Logging JSON to `syslog` however, is horrible way to live. I created Wafer to
 flatten out a JSON object just enough to make easy to search using tools
 designed for `syslog` analysis.
 
-It's easy to craft regular expressions such as `/ level=error;/` which is simple
-enough against JSON if you're using JavaScript regular expressions. You'd simply
-say `/"level":"error"/`. Not really that much harder.
+With Wafer it's easy to craft regular expressions such to match log lines such
+as `/ level=error;/`. Yes, this is also simple enough against JSON if you're
+using JavaScript regular expressions. You'd simply say `/"level":"error"/`. Not
+really that much harder at all.
 
-I ran into a logging database that wanted to match strings supplied as double
-quoted strings. I found myself writing out queries with a lot of backticks. The
-above query aganst JSON would be expressed
-as`"\\\"statusCode\\\":\\\"error\\\""`. Against Wafer the query is `" level=error;"`.
+Here's where it gets harder. I ran into a logging database that wanted to match
+strings supplied as double quoted strings. I found myself writing out queries
+with a lot of backticks. The above query aganst JSON would be expressed
+as `"\\\"statusCode\\\":\\\"error\\\""`. Against Wafer the query is
+`" level=error;"`.
 
 That's why this library exists. It's supposed to be easy to search with standard
-regular expression tools. It's supposed to be easier to read than JSON. Let me
-know if you find a use for it.
+regular expression tools. It's supposed to be easier for a human to read than
+JSON. Let me know if you find a use for it.
 
 ## Type Annotations, Sigils and Other Dingbats
 

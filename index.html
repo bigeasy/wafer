@@ -37,22 +37,25 @@ type information, but still human readable. UNIX tool chain eats it up.</p>
 </code></pre>
 <h2 id="motivation">Motivation</h2>
 <p>Streaming JSON is a fine format for to write the logs. With Node.js close at
-hand you can usually find what you&apos;re looking for in streaming JSON. You can
-also use <code>jq</code> to &#x2014; the <code>awk</code> of JSON &#x2014; to find what you&apos;re looking
-for.</p>
+hand you can usually find what you&apos;re looking for in line after line of JSON.
+You can also use <code>jq</code> to &#x2014; the <code>awk</code> of JSON &#x2014; to find what you&apos;re
+looking for.</p>
 <p>Logging JSON to <code>syslog</code> however, is horrible way to live. I created Wafer to
 flatten out a JSON object just enough to make easy to search using tools
 designed for <code>syslog</code> analysis.</p>
-<p>It&apos;s easy to craft regular expressions such as <code>/ level=error;/</code> which is simple
-enough against JSON if you&apos;re using JavaScript regular expressions. You&apos;d simply
-say <code>/&quot;level&quot;:&quot;error&quot;/</code>. Not really that much harder.</p>
-<p>I ran into a logging database that wanted to match strings supplied as double
-quoted strings. I found myself writing out queries with a lot of backticks. The
-above query aganst JSON would be expressed
-as<code>&quot;\\\&quot;statusCode\\\&quot;:\\\&quot;error\\\&quot;&quot;</code>. Against Wafer the query is <code>&quot; level=error;&quot;</code>.</p>
+<p>With Wafer it&apos;s easy to craft regular expressions such to match log lines such
+as <code>/ level=error;/</code>. Yes, this is also simple enough against JSON if you&apos;re
+using JavaScript regular expressions. You&apos;d simply say <code>/&quot;level&quot;:&quot;error&quot;/</code>. Not
+really that much harder at all.</p>
+<p>Here&apos;s where it gets harder. I ran into a logging database that wanted to match
+strings supplied as double quoted strings. I found myself writing out queries
+with a lot of backticks. The above query aganst JSON would be expressed
+as <code>&quot;\\\&quot;statusCode\\\&quot;:\\\&quot;error\\\&quot;&quot;</code>. Against Wafer the query is
+<code>&quot; level=error;&quot;</code>. From there I found that it was easier to work with log lines
+and <code>egrep</code> or AWK at the outset rather than </p>
 <p>That&apos;s why this library exists. It&apos;s supposed to be easy to search with standard
-regular expression tools. It&apos;s supposed to be easier to read than JSON. Let me
-know if you find a use for it.</p>
+regular expression tools. It&apos;s supposed to be easier for a human to read than
+JSON. Let me know if you find a use for it.</p>
 <h2 id="type-annotations-sigils-and-other-dingbats">Type Annotations, Sigils and Other Dingbats</h2>
 <p>Theres a bit of cruft in a line of Wafer used to preserve type information. You
 can see that sequence is a number, so it is annotated with <code>n</code>. <code>tag</code> is an
