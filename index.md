@@ -21,7 +21,7 @@ name=mutate; n sequence=1; 2 tag=database;, tag=insert; n status.workers=24; ↵
     n status.locks=3; query=upsert("user", 1)%0awhere user %40 1%30; json={"keys":["user",1]}
 ```
 
-Semi-colon delimited and minimally URL encoded. A bit of cruft to preseve the
+Semi-colon delimited and minimally URL encoded. A bit of cruft to preserve the
 type information, but still human readable. UNIX tool chain eats it up.
 
 ```console
@@ -46,7 +46,7 @@ really that much harder at all.
 
 Here's where it gets harder. I ran into a logging database that wanted to match
 strings supplied as double quoted strings. I found myself writing out queries
-with a lot of backticks. The above query aganst JSON would be expressed
+with a lot of backticks. The above query against JSON would be expressed
 as `"\\\"statusCode\\\":\\\"error\\\""`. Against Wafer the query is
 `" level=error;"`.
 
@@ -56,7 +56,7 @@ JSON. Let me know if you find a use for it.
 
 ## Type Annotations, Sigils and Other Dingbats
 
-Theres a bit of cruft in a line of Wafer used to preserve type information. You
+There's a bit of cruft in a line of Wafer used to preserve type information. You
 can see that sequence is a number, so it is annotated with `n`. `tag` is an
 array, so it's first element is annotated with the array length, subsequent
 elements are delimiated by a semi-colon followed by a comma.
@@ -75,7 +75,7 @@ relevant log lines.
 
 The tool I'm using will pattern match quickly using string match patterns. From
 there you can parse JSON to get more details. However if you have to parse JSON
-to extract feilds to search across the entire corpus, well, that's slow.
+to extract fields to search across the entire corpus, well, that's slow.
 
 This is why Wafer is designed to have some fields flat and some fields bundled
 up. (What I can probably do is work up some AWK + `jq` queries to how how they
