@@ -8,6 +8,7 @@
     "author":           "Alan Gutierrez <alan@prettyrobots.com>",
     "homepage":         "https://bigeasy.github.io/wafer",
     "bugs":             "https://github.com/bigeasy/wafer/issues",
+    "license":          "MIT",
     "keywords":
     [
                         "json", "serialization", "logging"
@@ -15,7 +16,6 @@
     "contributors":
     [
     ],
-    "main":             "wafer",
     "devDependencies":
     {
                         "proof":                            "1.1.x"
@@ -24,7 +24,7 @@
     {
                         "test": "proof platform win32 && proof test */*/*.t.* || t/test"
     },
-    "license":          "MIT",
+    "main":             "wafer",
     "repository":
     {
                         "type": "git",
