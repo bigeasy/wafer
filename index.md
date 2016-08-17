@@ -17,7 +17,7 @@ Wafer.serialize({
 Becomes.
 
 ```text
-name=mutate; n sequence=1; 2 tag=database;, tag=insert; n status.workers=24; ↵
+name=mutate; n sequence=1; 2 tag; tag=database;, tag=insert;, n status.workers=24; ↵
     n status.locks=3; query=upsert("user", 1)%0awhere user %40 1%30; json={"keys":["user",1]}
 ```
 
@@ -61,9 +61,47 @@ can see that sequence is a number, so it is annotated with `n`. `tag` is an
 array, so it's first element is annotated with the array length, subsequent
 elements are delimiated by a semi-colon followed by a comma.
 
-```text
-name=mutate; n sequence=1; 2 tag=database;, tag=insert; n status.workers=24; ↵
-    n status.locks=3; query=upsert("user", 1)%0awhere user %40 1%30; json={"keys":["user",1]}
+```javascript
+Wafer.serialize({ key: 'value' }) == 'key=value;'
+Wafer.serialize({ number: 1.1 }) == 'n number=1.1;'
+Wafer.serialize({ flag: true }) == 'b flag=true;'
+```
+
+Values are delimited by `;`. Here's the above all together.
+
+```javascript
+Wafer.serialize({ key: 'value', number 1.1, flag: true }) == 'key=value; n number=1.1; b flag=true;'
+```
+
+Nested objects are flattened.
+
+```javascript
+Wafer.serialize({ status: { state: 'listening', connections 3 } }) ==
+    'status.state=listening; n status.connections=3;'
+```
+
+Arrays begin with declaration of the array and it's length. Elements follow.
+
+```javascript
+Wafer.serialize({ tag: [ 'database', 'select' ] }) == 'tag 2; tag=database;, tag=select;,'
+```
+
+Elements are delimited by a semi-colon followed by a comma to indicate the end
+of the element.
+
+The commas will not get in the way of your match patterns. You are able to match
+the flattened array values using a simple match pattern that doesn't have to
+account for array index. `/ tag=select;/` matches regardless of where the
+"select" tag is in the array.
+
+TK: The match is unambiguous.
+
+The commas are necessary because an element may have an object and that object
+might have multiple properties.
+
+```javascript
+Wafer.serialize({ array: [{ one: 1, two: 2 }, { three: 3 }] }) ==
+    'array 2; n one=1; n two=2;, three: 3;,'
 ```
 
 ## Winnow versus Pinpoint
@@ -98,7 +136,7 @@ Becomes.
 
 ```text
 4 object.array; object.array=one;, n object.array=2;, object.array.key=value;,
-    n object.array.one=1;, 1 object.array=four;, object.array=five
+    n object.array.one=1;, 1 object.array; object.array=four;, object.array=five
 ```
 
 Basically, arrays nested in objects ruin everything. If you really want to dump

@@ -28,7 +28,7 @@ programs.</p>
 })
 </code></pre>
 <p>Becomes.</p>
-<pre><code class="lang-text">name=mutate; n sequence=1; 2 tag=database;, tag=insert; n status.workers=24; &#x21B5;
+<pre><code class="lang-text">name=mutate; n sequence=1; 2 tag; tag=database;, tag=insert;, n status.workers=24; &#x21B5;
     n status.locks=3; query=upsert(&quot;user&quot;, 1)%0awhere user %40 1%30; json={&quot;keys&quot;:[&quot;user&quot;,1]}
 </code></pre>
 <p>Semi-colon delimited and minimally URL encoded. A bit of cruft to preserve the
@@ -60,8 +60,31 @@ JSON. Let me know if you find a use for it.</p>
 can see that sequence is a number, so it is annotated with <code>n</code>. <code>tag</code> is an
 array, so it&apos;s first element is annotated with the array length, subsequent
 elements are delimiated by a semi-colon followed by a comma.</p>
-<pre><code class="lang-text">name=mutate; n sequence=1; 2 tag=database;, tag=insert; n status.workers=24; &#x21B5;
-    n status.locks=3; query=upsert(&quot;user&quot;, 1)%0awhere user %40 1%30; json={&quot;keys&quot;:[&quot;user&quot;,1]}
+<pre><code class="lang-javascript">Wafer.serialize({ key: <span class="hljs-string">&apos;value&apos;</span> }) == <span class="hljs-string">&apos;key=value;&apos;</span>
+Wafer.serialize({ number: <span class="hljs-number">1.1</span> }) == <span class="hljs-string">&apos;n number=1.1;&apos;</span>
+Wafer.serialize({ flag: <span class="hljs-literal">true</span> }) == <span class="hljs-string">&apos;b flag=true;&apos;</span>
+</code></pre>
+<p>Values are delimited by <code>;</code>. Here&apos;s the above all together.</p>
+<pre><code class="lang-javascript">Wafer.serialize({ key: <span class="hljs-string">&apos;value&apos;</span>, number <span class="hljs-number">1.1</span>, flag: <span class="hljs-literal">true</span> }) == <span class="hljs-string">&apos;key=value; n number=1.1; b flag=true;&apos;</span>
+</code></pre>
+<p>Nested objects are flattened.</p>
+<pre><code class="lang-javascript">Wafer.serialize({ status: { state: <span class="hljs-string">&apos;listening&apos;</span>, connections <span class="hljs-number">3</span> } }) ==
+    <span class="hljs-string">&apos;status.state=listening; n status.connections=3;&apos;</span>
+</code></pre>
+<p>Arrays begin with declaration of the array and it&apos;s length. Elements follow.</p>
+<pre><code class="lang-javascript">Wafer.serialize({ tag: [ <span class="hljs-string">&apos;database&apos;</span>, <span class="hljs-string">&apos;select&apos;</span> ] }) == <span class="hljs-string">&apos;tag 2; tag=database;, tag=select;,&apos;</span>
+</code></pre>
+<p>Elements are delimited by a semi-colon followed by a comma to indicate the end
+of the element.</p>
+<p>The commas will not get in the way of your match patterns. You are able to match
+the flattened array values using a simple match pattern that doesn&apos;t have to
+account for array index. <code>/ tag=select;/</code> matches regardless of where the
+&quot;select&quot; tag is in the array.</p>
+<p>TK: The match is unambiguous.</p>
+<p>The commas are necessary because an element may have an object and that object
+might have multiple properties.</p>
+<pre><code class="lang-javascript">Wafer.serialize({ array: [{ one: <span class="hljs-number">1</span>, two: <span class="hljs-number">2</span> }, { three: <span class="hljs-number">3</span> }] }) ==
+    <span class="hljs-string">&apos;array 2; n one=1; n two=2;, three: 3;,&apos;</span>
 </code></pre>
 <h2 id="winnow-versus-pinpoint">Winnow versus Pinpoint</h2>
 <p>I find there&apos;s a difference between the data I want to search and the data I
@@ -85,7 +108,7 @@ works for any depth. It is essentially a write log.</p>
 </code></pre>
 <p>Becomes.</p>
 <pre><code class="lang-text">4 object.array; object.array=one;, n object.array=2;, object.array.key=value;,
-    n object.array.one=1;, 1 object.array=four;, object.array=five
+    n object.array.one=1;, 1 object.array; object.array=four;, object.array=five
 </code></pre>
 <p>Basically, arrays nested in objects ruin everything. If you really want to dump
 a blob of data dump it as JSON using the <code>json</code> property. This property is
