@@ -1,33 +1,30 @@
 {
-    "name":             "wafer",
-    "version":          "2.0.0",
+    "name":                 "wafer",
+    "version":              "2.0.0",
     "description":
 
       "Flatten a JSON object into key value pairs, inflate again.",
 
-    "author":           "Alan Gutierrez <alan@prettyrobots.com>",
-    "homepage":         "https://bigeasy.github.io/wafer",
-    "bugs":             "https://github.com/bigeasy/wafer/issues",
-    "license":          "MIT",
     "keywords":
     [
-                        "json", "serialization", "logging"
+                            "json", "serialization", "logging"
     ],
-    "contributors":
-    [
-    ],
-    "devDependencies":
-    {
-                        "proof":                            "1.1.x"
-    },
-    "scripts":
-    {
-                        "test": "proof platform win32 && proof test */*/*.t.* || t/test"
-    },
-    "main":             "wafer",
+    "author":               "Alan Gutierrez <alan@prettyrobots.com>",
+    "homepage":             "https://bigeasy.github.io/wafer",
+    "bugs":                 "https://github.com/bigeasy/wafer/issues",
+    "license":              "MIT",
     "repository":
     {
-                        "type": "git",
-                        "url": "http://github.com/bigeasy/wafer.git"
+                            "type": "git",
+                            "url": "http://github.com/bigeasy/wafer.git"
+    },
+    "devDependencies":
+    {
+                            "proof":                        "1.1.x"
+    },
+    "main":                 "wafer",
+    "scripts":
+    {
+                            "test": "proof platform win32 && proof test */*/*.t.* || t/test"
     }
 }
