@@ -22,5 +22,5 @@ function prove (assert) {
     cycle({ a: [[{ one: 1, three: 3 }, { two: 2 }]], b: 2 }, 'array of array of objects')
     cycle({ z: [[3]], a: [[{ one: 1 }, { two: 2 }]], b: 2 }, 'arrays after arrays')
     cycle({ a: [[{ one: 1 }, 1, null, [[3]], { two: 2 }]], b: 2 }, 'heterogeneous arrays')
-    cycle({ a: 1, json: { key: 'value' },  b: 2 }, 'heterogeneous arrays')
+    cycle({ a: 1, $json: { key: 'value' },  b: 2 }, 'heterogeneous arrays')
 }

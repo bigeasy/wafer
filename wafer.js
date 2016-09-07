@@ -11,7 +11,7 @@ function encode (value) {
 }
 
 function property (path, key, value, out, suffix) {
-    if (key == 'json') {
+    if (key[0] == '$') {
         out.push('j')
         stringify(path.concat(key), JSON.stringify(value), out, suffix)
     } else {
