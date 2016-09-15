@@ -21,10 +21,10 @@
     "dependencies":
     {
                             "arguable":                     "4.0.x",
+                            "byline":                       "5.0.0",
                             "cadence":                      "1.0.x",
                             "delta":                        "1.1.x",
                             "rimraf":                       "2.5.4",
-                            "byline":                       "5.0.0",
                             "staccato":                     "1.1.x"
     },
     "devDependencies":
@@ -32,6 +32,10 @@
                             "proof":                        "1.1.x"
     },
     "main":                 "wafer",
+    "bin":
+    {
+                            "wafer":                        "wafer.bin.js"
+    },
     "scripts":
     {
                             "test": "proof platform win32 && proof test */*/*.t.* || t/test"
