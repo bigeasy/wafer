@@ -18,6 +18,15 @@
                             "type": "git",
                             "url": "http://github.com/bigeasy/wafer.git"
     },
+    "dependencies":
+    {
+                            "arguable":                     "4.0.x",
+                            "cadence":                      "1.0.x",
+                            "delta":                        "1.1.x",
+                            "rimraf":                       "2.5.4",
+                            "byline":                       "5.0.0",
+                            "staccato":                     "1.1.x"
+    },
     "devDependencies":
     {
                             "proof":                        "1.1.x"
