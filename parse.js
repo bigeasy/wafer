@@ -9,7 +9,7 @@ module.exports = cadence(function (async, syslog, input, output) {
             if (line == null) {
                 return [ loop.break ]
             }
-            output.write(JSON.stringify(syslog(line.toString())), async())
+            output.write(JSON.stringify(syslog(line.toString())) + '\n', async())
         })
     })()
 })
