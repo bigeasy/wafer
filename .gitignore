@@ -2,3 +2,4 @@
 /.proof.out
 /coverage
 /npm-debug.log
+/t/fixtures/*.out
