@@ -7,7 +7,7 @@ function percent (value) {
 }
 
 function encode (value) {
-    return String(value).replace(/[=;\n]/g, percent)
+    return String(value).replace(/[%=;\n]/g, percent)
 }
 
 function property (path, key, value, out, suffix) {
