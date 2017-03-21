@@ -10,7 +10,7 @@ function prove (async, assert) {
         var input = new stream.PassThrough
         var output = new stream.PassThrough
         async(function () {
-            parse(syslog, new Staccato(byline(input)), new Staccato(output), async())
+            parse(syslog, new Staccato.Readable(byline(input)), new Staccato.Writable(output), async())
             input.write('n sequence=0;\n')
             input.end()
         }, function () {

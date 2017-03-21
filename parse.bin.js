@@ -24,21 +24,21 @@ require('arguable')(module, require('cadence')(function (async, program) {
     var delta = require('delta')
 
     var output = program.ultimate.output
-               ? new Staccato(fs.createWriteStream(program.ultimate.output), true)
-               : new Staccato(program.stdout)
+               ? new Staccato.Writable(fs.createWriteStream(program.ultimate.output), true)
+               : new Staccato.Writable(program.stdout)
 
     async(function () {
         output.ready(async())
     }, function () {
         if (program.argv.length == 0) {
-            parse(syslog, new Staccato(byline(program.stdin)), output, async())
+            parse(syslog, new Staccato.Readable(byline(program.stdin)), output, async())
         } else {
             async.forEach(function (path) {
                 var input = fs.createReadStream(path)
                 async(function () {
                     delta(async()).ee(input).on('open')
                 }, function () {
-                    parse(syslog, new Staccato(byline(input)), output, async())
+                    parse(syslog, new Staccato.Readable(byline(input)), output, async())
                 })
             })(program.argv)
         }
