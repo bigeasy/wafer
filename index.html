@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
-<title>Wafer</title>
-<!--
-<link href='http://fonts.googleapis.com/css?family=Parisienne|Oxygen+Mono|PT+Mono|Offside|Nova+Mono|Averia+Serif+Libre|Alex+Brush|Autour+One|Share+Tech+Mono|Merriweather|Maven+Pro|Raleway' rel='stylesheet' type='text/css'>
--->
-<!-- todo: why doesn't fork me float? -->
-<link href="https://fonts.googleapis.com/css?family=Alex+Brush|Oxygen+Mono|Offside|Raleway:400,700" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="css/syntax.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<body><a href="https://github.com/bigeasy/wafer/"><img style="position: fixed; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a><div class="container">
-
-<div class="unit welcome">
-<h1>Wafer</h1>
-</div>
-<!-- todo: code font is too small for body text font -->
-<div class="unit description markdown"><h2 id="typed-log-lines">Typed Log Lines</h2>
+  <meta charset="utf-8">
+  <title>Wafer</title>
+  <link href="https://fonts.googleapis.com/css?family=Cutive+Mono|Sorts+Mill+Goudy|Mate|Oxygen+Mono|Offside|Raleway:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy">
+  <link rel="stylesheet" type="text/css" href="css/ascetic.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</html>
+<body><a href="https://github.com/bigeasy/wafer/"><img style="position: fixed; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  <div class="container">
+    <div class="unit welcome">
+      <h1>Wafer</h1>
+      <!-- todo: code font is too small for body text font-->
+    </div>
+    <div class="unit description markdown include" data-file="index.md"><h2 id="typed-log-lines">Typed Log Lines</h2>
 <p>Log line looking serialization that preserves type for use in your JavaScript
 programs.</p>
 <pre><code class="lang-javascript">Wafer.serialize({
-    name: <span class="hljs-string">&apos;mutate&apos;</span>
+    <span class="hljs-attr">name</span>: <span class="hljs-string">&apos;mutate&apos;</span>
     sequence: <span class="hljs-number">1</span>,
-    tag: [ <span class="hljs-string">&apos;database&apos;</span>, <span class="hljs-string">&apos;insert&apos;</span> ],
-    status: { workers: <span class="hljs-number">24</span>, locks: <span class="hljs-number">3</span> },
-    query: <span class="hljs-string">&apos;upsert(&quot;user&quot;, 1)\nwhere user = 1;&apos;</span>,
-    json: { keys: [ <span class="hljs-string">&apos;user&apos;</span>, <span class="hljs-number">1</span> ] }
+    <span class="hljs-attr">tag</span>: [ <span class="hljs-string">&apos;database&apos;</span>, <span class="hljs-string">&apos;insert&apos;</span> ],
+    <span class="hljs-attr">status</span>: { <span class="hljs-attr">workers</span>: <span class="hljs-number">24</span>, <span class="hljs-attr">locks</span>: <span class="hljs-number">3</span> },
+    <span class="hljs-attr">query</span>: <span class="hljs-string">&apos;upsert(&quot;user&quot;, 1)\nwhere user = 1;&apos;</span>,
+    <span class="hljs-attr">json</span>: { <span class="hljs-attr">keys</span>: [ <span class="hljs-string">&apos;user&apos;</span>, <span class="hljs-number">1</span> ] }
 })
 </code></pre>
 <p>Becomes.</p>
@@ -60,19 +58,19 @@ JSON. Let me know if you find a use for it.</p>
 can see that sequence is a number, so it is annotated with <code>n</code>. <code>tag</code> is an
 array, so it&apos;s first element is annotated with the array length, subsequent
 elements are delimiated by a semi-colon followed by a comma.</p>
-<pre><code class="lang-javascript">Wafer.serialize({ key: <span class="hljs-string">&apos;value&apos;</span> }) == <span class="hljs-string">&apos;key=value;&apos;</span>
-Wafer.serialize({ number: <span class="hljs-number">1.1</span> }) == <span class="hljs-string">&apos;n number=1.1;&apos;</span>
-Wafer.serialize({ flag: <span class="hljs-literal">true</span> }) == <span class="hljs-string">&apos;b flag=true;&apos;</span>
+<pre><code class="lang-javascript">Wafer.serialize({ <span class="hljs-attr">key</span>: <span class="hljs-string">&apos;value&apos;</span> }) == <span class="hljs-string">&apos;key=value;&apos;</span>
+Wafer.serialize({ <span class="hljs-attr">number</span>: <span class="hljs-number">1.1</span> }) == <span class="hljs-string">&apos;n number=1.1;&apos;</span>
+Wafer.serialize({ <span class="hljs-attr">flag</span>: <span class="hljs-literal">true</span> }) == <span class="hljs-string">&apos;b flag=true;&apos;</span>
 </code></pre>
 <p>Values are delimited by <code>;</code>. Here&apos;s the above all together.</p>
-<pre><code class="lang-javascript">Wafer.serialize({ key: <span class="hljs-string">&apos;value&apos;</span>, number <span class="hljs-number">1.1</span>, flag: <span class="hljs-literal">true</span> }) == <span class="hljs-string">&apos;key=value; n number=1.1; b flag=true;&apos;</span>
+<pre><code class="lang-javascript">Wafer.serialize({ <span class="hljs-attr">key</span>: <span class="hljs-string">&apos;value&apos;</span>, number <span class="hljs-number">1.1</span>, <span class="hljs-attr">flag</span>: <span class="hljs-literal">true</span> }) == <span class="hljs-string">&apos;key=value; n number=1.1; b flag=true;&apos;</span>
 </code></pre>
 <p>Nested objects are flattened.</p>
-<pre><code class="lang-javascript">Wafer.serialize({ status: { state: <span class="hljs-string">&apos;listening&apos;</span>, connections <span class="hljs-number">3</span> } }) ==
+<pre><code class="lang-javascript">Wafer.serialize({ <span class="hljs-attr">status</span>: { <span class="hljs-attr">state</span>: <span class="hljs-string">&apos;listening&apos;</span>, connections <span class="hljs-number">3</span> } }) ==
     <span class="hljs-string">&apos;status.state=listening; n status.connections=3;&apos;</span>
 </code></pre>
 <p>Arrays begin with declaration of the array and it&apos;s length. Elements follow.</p>
-<pre><code class="lang-javascript">Wafer.serialize({ tag: [ <span class="hljs-string">&apos;database&apos;</span>, <span class="hljs-string">&apos;select&apos;</span> ] }) == <span class="hljs-string">&apos;tag 2; tag=database;, tag=select;,&apos;</span>
+<pre><code class="lang-javascript">Wafer.serialize({ <span class="hljs-attr">tag</span>: [ <span class="hljs-string">&apos;database&apos;</span>, <span class="hljs-string">&apos;select&apos;</span> ] }) == <span class="hljs-string">&apos;tag 2; tag=database;, tag=select;,&apos;</span>
 </code></pre>
 <p>Elements are delimited by a semi-colon followed by a comma to indicate the end
 of the element.</p>
@@ -83,7 +81,7 @@ account for array index. <code>/ tag=select;/</code> matches regardless of where
 <p>TK: The match is unambiguous.</p>
 <p>The commas are necessary because an element may have an object and that object
 might have multiple properties.</p>
-<pre><code class="lang-javascript">Wafer.serialize({ array: [{ one: <span class="hljs-number">1</span>, two: <span class="hljs-number">2</span> }, { three: <span class="hljs-number">3</span> }] }) ==
+<pre><code class="lang-javascript">Wafer.serialize({ <span class="hljs-attr">array</span>: [{ <span class="hljs-attr">one</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">two</span>: <span class="hljs-number">2</span> }, { <span class="hljs-attr">three</span>: <span class="hljs-number">3</span> }] }) ==
     <span class="hljs-string">&apos;array 2; n one=1; n two=2;, three: 3;,&apos;</span>
 </code></pre>
 <h2 id="winnow-versus-pinpoint">Winnow versus Pinpoint</h2>
@@ -101,8 +99,8 @@ might work together.)</p>
 <p>The readability of Wafer breaks down when you nest too deeply, but it still
 works for any depth. It is essentially a write log.</p>
 <pre><code class="lang-javascript">Wafer.serialize({
-    object: {
-        array: [ <span class="hljs-string">&apos;one&apos;</span>, <span class="hljs-number">2</span>, { key: [ <span class="hljs-string">&apos;value&apos;</span> ] }, { one: <span class="hljs-number">1</span> }, [ <span class="hljs-string">&apos;four&apos;</span> ], <span class="hljs-string">&apos;five&apos;</span> ]
+    <span class="hljs-attr">object</span>: {
+        <span class="hljs-attr">array</span>: [ <span class="hljs-string">&apos;one&apos;</span>, <span class="hljs-number">2</span>, { <span class="hljs-attr">key</span>: [ <span class="hljs-string">&apos;value&apos;</span> ] }, { <span class="hljs-attr">one</span>: <span class="hljs-number">1</span> }, [ <span class="hljs-string">&apos;four&apos;</span> ], <span class="hljs-string">&apos;five&apos;</span> ]
     }
 })
 </code></pre>
@@ -113,15 +111,16 @@ works for any depth. It is essentially a write log.</p>
 <p>Basically, arrays nested in objects ruin everything. If you really want to dump
 a blob of data dump it as JSON using the <code>json</code> property. This property is
 serialized as JSON. You&apos;ll have the data if you need it.</p>
-</div></div></body>
-<!-- todo: move into an edify plugin -->
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-20388260-3', 'bigeasy.github.io');
-ga('send', 'pageview');
-</script>
-</html>
+</div>
+  </div>
+  <!-- todo: move into an edify plugin-->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-20388260-3', 'bigeasy.github.io');
+    ga('send', 'pageview');
+  </script>
+</body>
+<!-- vim: set ts=2 sw=2 nowrap:-->
