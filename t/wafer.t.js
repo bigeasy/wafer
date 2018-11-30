@@ -1,11 +1,11 @@
 require('proof')(16, prove)
 
-function prove (assert) {
+function prove (okay) {
     var Wafer = require('..')
     function cycle (object, message) {
         var flattened = Wafer.stringify(object)
         console.log('flattened >', flattened)
-        assert(Wafer.parse(flattened), object, message)
+        okay(Wafer.parse(flattened), object, message)
     }
     cycle({}, 'empty')
     cycle({ key: 'value' }, 'minimal')

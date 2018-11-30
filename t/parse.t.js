@@ -1,6 +1,6 @@
 require('proof')(1, require('cadence')(prove))
 
-function prove (async, assert) {
+function prove (async, okay) {
     var parse = require('../parse')
     var stream = require('stream')
     var syslog = require('../syslog')(false)
@@ -14,7 +14,7 @@ function prove (async, assert) {
             input.write('n sequence=0;\n')
             input.end()
         }, function () {
-            assert(JSON.parse(output.read().toString()), { sequence: 0 }, 'parsed')
+            okay(JSON.parse(output.read().toString()), { sequence: 0 }, 'parsed')
         })
     })
 }

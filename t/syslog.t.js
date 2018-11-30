@@ -1,9 +1,9 @@
 require('proof')(2, prove)
 
-function prove (assert) {
+function prove (okay) {
     var syslog = require('../syslog')(true)
     var line = '<132>1 1970-01-01T00:00:00.000Z h a 0 - - n sequence=0; name=greeting; j $vargs=[];\n'
-    assert(syslog(line), {
+    okay(syslog(line), {
         sequence: 0,
         name: 'greeting',
         $vargs: [],
@@ -16,5 +16,5 @@ function prove (assert) {
     }, 'syslog')
     var syslog = require('../syslog')(false)
     var line = 'n sequence=0; name=greeting; j $vargs=[];\n'
-    assert(syslog(line), { sequence: 0, name: 'greeting', $vargs: [] }, 'no syslog')
+    okay(syslog(line), { sequence: 0, name: 'greeting', $vargs: [] }, 'no syslog')
 }

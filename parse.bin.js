@@ -30,13 +30,13 @@ require('arguable')(module, require('cadence')(function (async, program) {
     if (program.argv.length == 0) {
         parse(syslog, new Staccato.Readable(byline(program.stdin)), output, async())
     } else {
-        async.forEach(function (path) {
+        async.forEach([ program.argv ], function (path) {
             var input = fs.createReadStream(path)
             async(function () {
                 delta(async()).ee(input).on('open')
             }, function () {
                 parse(syslog, new Staccato.Readable(byline(input)), output, async())
             })
-        })(program.argv)
+        })
     }
 }))
