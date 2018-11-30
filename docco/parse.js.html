@@ -72,17 +72,19 @@
 <span class="hljs-keyword">var</span> cadence = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cadence'</span>)
 
 <span class="hljs-built_in">module</span>.exports = cadence(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">async, syslog, input, output</span>) </span>{
-    <span class="hljs-keyword">var</span> loop = <span class="hljs-keyword">async</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">async</span>.loop([], <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">async</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
             input.read(<span class="hljs-keyword">async</span>())
         }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">line</span>) </span>{
             <span class="hljs-keyword">if</span> (line == <span class="hljs-literal">null</span>) {
-                <span class="hljs-keyword">return</span> [ loop.break ]
+                <span class="hljs-keyword">return</span> [ <span class="hljs-keyword">async</span>.break ]
             }
             output.write(<span class="hljs-built_in">JSON</span>.stringify(syslog(line.toString())) + <span class="hljs-string">'\n'</span>, <span class="hljs-keyword">async</span>())
         })
-    })()
-})</pre></div></div>
+    })
+})
+
+</pre></div></div>
 
         </li>
 

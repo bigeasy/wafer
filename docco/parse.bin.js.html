@@ -97,23 +97,21 @@
                ? <span class="hljs-keyword">new</span> Staccato.Writable(fs.createWriteStream(program.ultimate.output), <span class="hljs-literal">true</span>)
                : <span class="hljs-keyword">new</span> Staccato.Writable(program.stdout)
 
-    <span class="hljs-keyword">async</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        output.ready(<span class="hljs-keyword">async</span>())
-    }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">if</span> (program.argv.length == <span class="hljs-number">0</span>) {
-            parse(syslog, <span class="hljs-keyword">new</span> Staccato.Readable(byline(program.stdin)), output, <span class="hljs-keyword">async</span>())
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-keyword">async</span>.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">path</span>) </span>{
-                <span class="hljs-keyword">var</span> input = fs.createReadStream(path)
-                <span class="hljs-keyword">async</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                    delta(<span class="hljs-keyword">async</span>()).ee(input).on(<span class="hljs-string">'open'</span>)
-                }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                    parse(syslog, <span class="hljs-keyword">new</span> Staccato.Readable(byline(input)), output, <span class="hljs-keyword">async</span>())
-                })
-            })(program.argv)
-        }
-    })
-}))</pre></div></div>
+    <span class="hljs-keyword">if</span> (program.argv.length == <span class="hljs-number">0</span>) {
+        parse(syslog, <span class="hljs-keyword">new</span> Staccato.Readable(byline(program.stdin)), output, <span class="hljs-keyword">async</span>())
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">async</span>.forEach([ program.argv ], <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">path</span>) </span>{
+            <span class="hljs-keyword">var</span> input = fs.createReadStream(path)
+            <span class="hljs-keyword">async</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                delta(<span class="hljs-keyword">async</span>()).ee(input).on(<span class="hljs-string">'open'</span>)
+            }, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                parse(syslog, <span class="hljs-keyword">new</span> Staccato.Readable(byline(input)), output, <span class="hljs-keyword">async</span>())
+            })
+        })
+    }
+}))
+
+</pre></div></div>
 
         </li>
 
