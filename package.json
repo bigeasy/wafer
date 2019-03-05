@@ -24,7 +24,7 @@
                             "byline":                       "5.0.0",
                             "cadence":                      "3.0.x",
                             "delta":                        "3.0.x",
-                            "rimraf":                       "2.6.2",
+                            "rimraf":                       "2.6.3",
                             "staccato":                     "7.0.x"
     },
     "devDependencies":
