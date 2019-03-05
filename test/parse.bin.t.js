@@ -9,14 +9,14 @@ function prove (async, okay) {
         program.stdin.write('n sequence=0;\n')
         program.stdin.end()
     }, function () {
-        rimraf('t/fixtures/wafer.log.out', async())
+        rimraf('test/fixtures/wafer.log.out', async())
     }, function () {
         okay(JSON.parse(program.stdout.read().toString()), { sequence: 0 }, 'stdio')
-        program = bin([ 'parse', '-o', 't/fixtures/wafer.log.out', 't/fixtures/wafer.log.in' ], async())
+        program = bin([ 'parse', '-o', 'test/fixtures/wafer.log.out', 'test/fixtures/wafer.log.in' ], async())
         program.stdin.write('n sequence=0;\n')
         program.stdin.end()
     }, function () {
-        fs.readFile('t/fixtures/wafer.log.out', 'utf8', async())
+        fs.readFile('test/fixtures/wafer.log.out', 'utf8', async())
     }, function (body) {
         okay(JSON.parse(body), { sequence: 1 }, 'body')
     })
