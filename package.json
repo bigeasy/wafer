@@ -1,6 +1,6 @@
 {
     "name":                 "wafer",
-    "version":              "9.0.0",
+    "version":              "9.0.1",
     "description":
 
       "Flatten a JSON object into key value pairs, inflate again.",
