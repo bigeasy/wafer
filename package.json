@@ -29,7 +29,7 @@
     },
     "devDependencies":
     {
-                            "proof":                        "7.0.x"
+                            "proof":                        "^9.0.3"
     },
     "main":                 "wafer",
     "bin":
@@ -38,6 +38,6 @@
     },
     "scripts":
     {
-                            "test": "proof test test/*.t.*"
+                            "test": "proof test/*.t.js"
     }
 }
