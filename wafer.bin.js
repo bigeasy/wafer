@@ -17,9 +17,13 @@
 
     ___ . ___
 */
-
-require('arguable')(module, require('cadence')(function (async, program) {
-    program.helpIf(program.ultimate.help)
-
-    program.delegate('./' + program.argv.shift() + '.bin', program.argv, async())
-}))
+require('arguable')(module, async arguable => {
+    arguable.helpIf(arguable.ultimate.help)
+    const delegate = arguable.delegate(require, './%s.bin', arguable.argv.shift())
+    const child = delegate(arguable.argv, {
+        $stdin: arguable.stdin,
+        $stdout: arguable.stdout
+    })
+    arguable.destroyed.then(child.destroy.bind(child))
+    return child.exit
+})

@@ -1,15 +1,13 @@
-var Staccato = require('staccato')
-var cadence = require('cadence')
-
-module.exports = cadence(function (async, syslog, input, output) {
-    async.loop([], function () {
-        async(function () {
-            input.read(async())
-        }, function (line) {
-            if (line == null) {
-                return [ async.break ]
-            }
-            output.write(JSON.stringify(syslog(line.toString())) + '\n', async())
-        })
-    })
-})
+module.exports = async function (syslog, input, output) {
+    for await (const line of input.readable) {
+        if (! output.writable.write(JSON.stringify(syslog(line.toString())) + '\n')) {
+            await output.writable.drain()
+        }
+        if (output.writable.finished) {
+            break
+        }
+    }
+    output.writable.end()
+    output.depart()
+    input.depart()
+}

@@ -1,20 +1,27 @@
-require('proof')(1, require('cadence')(prove))
-
-function prove (async, okay) {
-    var parse = require('../parse')
-    var stream = require('stream')
-    var syslog = require('../syslog')(false)
-    var Staccato = require('staccato')
-    var byline = require('byline')
-    async(function () {
-        var input = new stream.PassThrough
-        var output = new stream.PassThrough
-        async(function () {
-            parse(syslog, new Staccato.Readable(byline(input)), new Staccato.Writable(output), async())
-            input.write('n sequence=0;\n')
-            input.end()
-        }, function () {
-            okay(JSON.parse(output.read().toString()), { sequence: 0 }, 'parsed')
-        })
-    })
-}
+require('proof')(2, async okay => {
+    const parse = require('../parse')
+    const stream = require('stream')
+    const syslog = require('../syslog')(false)
+    const Staccato = require('staccato/redux')
+    const byline = require('byline')
+    {
+        const input = new stream.PassThrough
+        const output = new stream.PassThrough
+        const promise = parse(syslog, new Staccato(byline(input)), new Staccato(output))
+        input.write('n sequence=0;\n')
+        input.end()
+        await promise
+        okay(JSON.parse(output.read().toString()), { sequence: 0 }, 'parse')
+    }
+    try {
+        const input = new stream.PassThrough
+        const output = new stream.PassThrough
+        const promise = parse(syslog, new Staccato(byline(input)), new Staccato(output))
+        output.emit('error', new Error('error'))
+        input.write('n sequence=0;\n')
+        input.end()
+        await promise
+    } catch (error) {
+        okay(error.errors[0].message, 'error', 'handle error')
+    }
+})

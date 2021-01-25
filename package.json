@@ -20,12 +20,9 @@
     },
     "dependencies":
     {
-                            "arguable":                     "7.0.x",
+                            "arguable":                     "12.0.6",
                             "byline":                       "5.0.0",
-                            "cadence":                      "3.0.x",
-                            "delta":                        "3.0.x",
-                            "rimraf":                       "2.6.3",
-                            "staccato":                     "7.0.x"
+                            "staccato":                     "12.0.11"
     },
     "devDependencies":
     {

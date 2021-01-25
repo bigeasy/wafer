@@ -1,6 +1,4 @@
-require('proof')(16, prove)
-
-function prove (okay) {
+require('proof')(16, okay => {
     var Wafer = require('..')
     function cycle (object, message) {
         var flattened = Wafer.stringify(object)
@@ -23,4 +21,4 @@ function prove (okay) {
     cycle({ z: [[3]], a: [[{ one: 1 }, { two: 2 }]], b: 2 }, 'arrays after arrays')
     cycle({ a: [[{ one: 1 }, 1, null, [[3]], { two: 2 }]], b: 2 }, 'heterogeneous arrays')
     cycle({ a: 1, $json: { key: 'value' },  b: 2 }, 'heterogeneous arrays')
-}
+})

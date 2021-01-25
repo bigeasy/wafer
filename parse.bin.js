@@ -12,31 +12,28 @@
 
     ___ . ___
 */
-require('arguable')(module, require('cadence')(function (async, program) {
-    var parse = require('./parse')
+require('arguable')(module, async arguable => {
+    const parse = require('./parse')
 
-    program.helpIf(program.ultimate.help)
+    arguable.helpIf(arguable.ultimate.help)
 
-    var fs = require('fs')
-    var syslog = require('./syslog')(program.ultimate.syslog)
-    var Staccato = require('staccato')
-    var byline = require('byline')
-    var delta = require('delta')
+    const fs = require('fs')
+    const syslog = require('./syslog')(arguable.ultimate.syslog)
+    const Staccato = require('staccato/redux')
+    const byline = require('byline')
 
-    var output = program.ultimate.output
-               ? new Staccato.Writable(fs.createWriteStream(program.ultimate.output), true)
-               : new Staccato.Writable(program.stdout)
+    const output = arguable.ultimate.output
+               ? new Staccato(fs.createWriteStream(arguable.ultimate.output))
+               : new Staccato(arguable.stdout)
 
-    if (program.argv.length == 0) {
-        parse(syslog, new Staccato.Readable(byline(program.stdin)), output, async())
+    if (arguable.argv.length == 0) {
+        await parse(syslog, new Staccato(byline(arguable.stdin)), output)
     } else {
-        async.forEach([ program.argv ], function (path) {
-            var input = fs.createReadStream(path)
-            async(function () {
-                delta(async()).ee(input).on('open')
-            }, function () {
-                parse(syslog, new Staccato.Readable(byline(input)), output, async())
-            })
-        })
+        for (const file of arguable.argv) {
+            const input = fs.createReadStream(file)
+            await parse(syslog, new Staccato(byline(input)), output)
+        }
     }
-}))
+
+    return 0
+})
